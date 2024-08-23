@@ -2,6 +2,8 @@
 
 -Removed Gui support
 
+MAKE SURE TO NOT EXPOSE YOUR DISCORD WEBHOOK TO THE CLIENT! ALWAYS USE SERVERSTORAGE OR SERVERSCRIPTSERVICE
+
 # Admin Module
 This project is a comprehensive Roblox Admin Commands System based on the new BanAPI. It includes functionalities for banning and unbanning players, checking player ban history, and retrieving player IDs, all integrated with Discord for notification and logging purposes.
 
