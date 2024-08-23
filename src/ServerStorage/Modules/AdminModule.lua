@@ -1,5 +1,5 @@
 --[[
-	Written by Begi.
+	Written by Begi. Modified by EinMarek
 	AdminModule: Roblox Admin Commands System Based On New BanAPI.
 --]]
 

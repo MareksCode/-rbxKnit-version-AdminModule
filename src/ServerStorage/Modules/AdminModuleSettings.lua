@@ -1,15 +1,17 @@
 --[[
-	Written by Begi.
+	Written by Begi. Modified by EinMarek
 	Configuration for AdminModule.
 --]]
 
 local Config = {}
 
--- Remote Events
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage.Remotes
+
 Config.Remotes = {
-	CommandFeedbackEvent = script.Parent:WaitForChild("CommandFeedbackEvent"),
-	CommandsFromUI = script.Parent:WaitForChild("ExecuteCommandFromUI"),
-	BanFromUI = script.Parent:WaitForChild("BanFromUI")
+	CommandFeedbackEvent = Remotes:WaitForChild("CommandFeedbackEvent"),
+	CommandsFromUI = Remotes:WaitForChild("ExecuteCommandFromUI"),
+	BanFromUI = Remotes:WaitForChild("BanFromUI")
 }
 
 -- General Settings

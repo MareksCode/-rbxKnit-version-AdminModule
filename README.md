@@ -1,3 +1,6 @@
+-Supports Rojo & Knit
+-Removed Gui support
+
 # Admin Module
 This project is a comprehensive Roblox Admin Commands System based on the new BanAPI. It includes functionalities for banning and unbanning players, checking player ban history, and retrieving player IDs, all integrated with Discord for notification and logging purposes.
 
@@ -14,20 +17,7 @@ This project is a comprehensive Roblox Admin Commands System based on the new Ba
 
 
 ## Installation
-`0.` Download the module from [here](https://devforum.roblox.com/t/open-source-adminmodule-roblox-admin-commands-system-based-on-new-banapi/3064385)
-
-`1.` Place **AdminModule** ModuleScript in the *ReplicatedStorage*.
-
-`2.` Place **AdminModuleCommandHandler** ServerScript in the *ServerScriptService*.
-
-`3.` Place **AdminModule** ScreenGui in the *StarterGui*.
-
-`4.` Edit the **Config** ModuleScript.
-
-`5.` Make sure that files are placed correctly, like in the screenshot:
-
-![image](https://github.com/user-attachments/assets/abcfc352-5cdc-424e-968b-25ad6b078c4c)
-
+Drag the components into your Knit setup. Mine is the one in the repository.
 
 ## Usage
 
@@ -73,10 +63,6 @@ Updated version
 
 ![image](https://github.com/user-attachments/assets/69fe95fd-3808-4195-8628-95522067242b)
 
-GUI
-
-![image](https://github.com/user-attachments/assets/5b565306-928c-4b18-960d-0bd7422a802c)
-
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/beeeegi/AdminModule/blob/main/LICENSE) file for details.
@@ -85,5 +71,6 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 Written by [Begi](https://github.com/beeeegi)
 
 Contributor: [zero](https://github.com/xd3d9)
+Contributor: [Marek](https://github.com/MareksCode)
 
 Special thanks to the Roblox Developer Community for the continuous support and resources.

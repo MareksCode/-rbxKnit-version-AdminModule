@@ -1,27 +1,37 @@
 --[[
-	Written by Begi.
+	Written by Begi. Modified by EinMarek
 	Listens for commands, checks permissions, and executes the appropriate functions from AdminModule.
 --]]
 
-local AdminModule = require(game:GetService("ReplicatedStorage"):WaitForChild("AdminModule"))
-local Config = require(game:GetService("ReplicatedStorage"):WaitForChild("AdminModule"):WaitForChild("Config"))
-
--- Services
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Knit = require(ReplicatedStorage.Packages.Knit)
 local Players = game:GetService("Players")
 
--- Function to check if a player is an admin
-local function isAdmin(player)
+local ModerationService = Knit.CreateService({
+	Name = "ModerationService",
+	Client = {
+		CommandFeedbackEvent = Knit.CreateSignal()
+	},
+})
+
+local AdminModule, Config
+
+function ModerationService:KnitInit()
+	AdminModule = require(ReplicatedStorage.Modules.AdminModule)
+	Config = require(ReplicatedStorage.Modules.AdminModuleSettings)
+end
+
+function ModerationService:isAdmin(player)
 	return table.find(Config.AdminUserIds, player.UserId) ~= nil
 end
 
--- Function to process commands
-local function processCommand(player, message)
+function ModerationService:processCommand(player, message)
 	-- Split the message into command and arguments
 	local args = message:split(" ")
 	local command = table.remove(args, 1):lower()
 
 	if command == Config.CommandPrefix .. "ban" then
-		if isAdmin(player) then
+		if ModerationService:isAdmin(player) then
 			local targetID = tonumber(args[1])
 			local duration = args[2]
 
@@ -42,11 +52,10 @@ local function processCommand(player, message)
 		else
 			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
-
 	elseif command == Config.CommandPrefix .. "unban" then
-		if isAdmin(player) then
+		if ModerationService:isAdmin(player) then
 			local targetID = tonumber(args[1])
-			
+
 			if targetID then
 				AdminModule.UnbanPlayer(targetID, player)
 			else
@@ -55,9 +64,8 @@ local function processCommand(player, message)
 		else
 			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
-
 	elseif command == Config.CommandPrefix .. "checkhistory" then
-		if isAdmin(player) then
+		if ModerationService:isAdmin(player) then
 			local targetID = tonumber(args[1])
 
 			if targetID then
@@ -68,9 +76,8 @@ local function processCommand(player, message)
 		else
 			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
-
 	elseif command == Config.CommandPrefix .. "getid" then
-		if isAdmin(player) then
+		if ModerationService:isAdmin(player) then
 			local targetUsername = args[1]
 			AdminModule.GetPlayerID(targetUsername, player)
 		else
@@ -81,33 +88,23 @@ local function processCommand(player, message)
 	end
 end
 
--- Listen for player chats
-Players.PlayerAdded:Connect(function(player)
-	if isAdmin(player) then
-		Config.Remotes.CommandFeedbackEvent:FireClient(player, "AdminModule is activated for you. Toggle menu: "..tostring(Config.ToggleKey))
-	end
-	
-	player.Chatted:Connect(function(message)	
-		if message:sub(1, #Config.CommandPrefix) == Config.CommandPrefix then
-			processCommand(player, message)
+function ModerationService:KnitStart()
+	local function playerAdded(player: Player)
+		if ModerationService:isAdmin(player) then
+			self.Client.CommandFeedbackEvent:FireClient(
+				player,
+				"AdminModule is activated for you. Toggle menu: " .. tostring(Config.ToggleKey)
+			)
 		end
-	end)
-end)
 
-
-Config.Remotes.CommandsFromUI.OnServerEvent:Connect(function(player, command, parameter)
-	if command == "GetID" then
-		local username = parameter
-		AdminModule.GetPlayerID(username, player)
-	elseif command == "Unban" then
-		local id = parameter
-		AdminModule.UnbanPlayer(id, player)
-	elseif command == "CheckHistory" then
-		local id = parameter
-		AdminModule.CheckPlayerHistory(id, player)
+		player.Chatted:Connect(function(message)
+			if message:sub(1, #Config.CommandPrefix) == Config.CommandPrefix then
+				ModerationService:processCommand(player, message)
+			end
+		end)
 	end
-end)
 
-Config.Remotes.BanFromUI.OnServerEvent:Connect(function(player, id, duration, reason)	
-	AdminModule.BanPlayer(id, duration, reason, player)
-end)
+	Players.PlayerAdded:Connect(playerAdded)
+end
+
+return ModerationService
