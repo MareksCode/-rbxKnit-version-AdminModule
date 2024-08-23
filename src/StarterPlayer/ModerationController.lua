@@ -11,6 +11,7 @@ end
 
 function ModerationController:KnitInit()
     local function CommandFeedbackEvent(text)
+        --add your preferred method of notification here
         
     end
 

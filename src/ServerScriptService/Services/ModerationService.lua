@@ -4,6 +4,7 @@
 --]]
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 local Knit = require(ReplicatedStorage.Packages.Knit)
 local Players = game:GetService("Players")
 
@@ -17,8 +18,8 @@ local ModerationService = Knit.CreateService({
 local AdminModule, Config
 
 function ModerationService:KnitInit()
-	AdminModule = require(ReplicatedStorage.Modules.AdminModule)
-	Config = require(ReplicatedStorage.Modules.AdminModuleSettings)
+	AdminModule = require(ServerStorage.Modules.AdminModule)
+	Config = require(ServerStorage.Modules.AdminModuleSettings)
 end
 
 function ModerationService:isAdmin(player)
@@ -47,10 +48,10 @@ function ModerationService:processCommand(player, message)
 			if targetID then
 				AdminModule.BanPlayer(targetID, duration, reason, player)
 			else
-				Config.Remotes.CommandFeedbackEvent:FireClient(player, "Player not found.")
+				self.Client.CommandFeedbackEvent:FireClient(player, "Player not found.")
 			end
 		else
-			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
+			self.Client.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
 	elseif command == Config.CommandPrefix .. "unban" then
 		if ModerationService:isAdmin(player) then
@@ -59,10 +60,10 @@ function ModerationService:processCommand(player, message)
 			if targetID then
 				AdminModule.UnbanPlayer(targetID, player)
 			else
-				Config.Remotes.CommandFeedbackEvent:FireClient(player, "Player not found.")
+				self.Client.CommandFeedbackEvent:FireClient(player, "Player not found.")
 			end
 		else
-			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
+			self.Client.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
 	elseif command == Config.CommandPrefix .. "checkhistory" then
 		if ModerationService:isAdmin(player) then
@@ -71,20 +72,20 @@ function ModerationService:processCommand(player, message)
 			if targetID then
 				AdminModule.CheckPlayerHistory(targetID, player)
 			else
-				Config.Remotes.CommandFeedbackEvent:FireClient(player, "Player not found.")
+				self.Client.CommandFeedbackEvent:FireClient(player, "Player not found.")
 			end
 		else
-			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
+			self.Client.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
 	elseif command == Config.CommandPrefix .. "getid" then
 		if ModerationService:isAdmin(player) then
 			local targetUsername = args[1]
 			AdminModule.GetPlayerID(targetUsername, player)
 		else
-			Config.Remotes.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
+			self.Client.CommandFeedbackEvent:FireClient(player, "You do not have permission to use this command.")
 		end
 	else
-		Config.Remotes.CommandFeedbackEvent:FireClient(player, "Unknown command.")
+		self.Client.CommandFeedbackEvent:FireClient(player, "Unknown command.")
 	end
 end
 
