@@ -73,7 +73,7 @@ Config.Embeds = {
 -- Reason Placeholders
 Config.ReasonPlaceholders = {
 	NoReason = "No reason specified",
-	ReasonTemplate = ". For more details or ban appeal please contact us." -- DO NOT USE SPECIAL CHARACTERS
+	ReasonTemplate = ". For more details or ban appeal please contact us on the Discord server linked in the group." -- DO NOT USE SPECIAL CHARACTERS
 }
 
 -- Messages Configuration
