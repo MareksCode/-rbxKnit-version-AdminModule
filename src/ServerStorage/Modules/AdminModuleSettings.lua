@@ -16,8 +16,7 @@ Config.Remotes = {
 
 -- General Settings
 Config.CommandPrefix = "/"
-Config.AdminUserIds = {1234, 4321} -- Add admin UserIds here
-Config.ToggleKey = Enum.KeyCode.F4	-- Only change the key. Do not touch Enum.KeyCode.
+Config.AdminUserIds = {1234, 4321}
 
 -- Webhook Settings
 Config.WebhookURL = "your_webhook_here"

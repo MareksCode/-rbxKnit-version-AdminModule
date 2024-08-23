@@ -46,7 +46,8 @@ function ModerationService:processCommand(player, message)
 			end
 
 			if targetID then
-				AdminModule.BanPlayer(targetID, duration, reason, player)
+				local msg = AdminModule.BanPlayer(targetID, duration, reason, player)
+				if msg then self.Client.CommandFeedbackEvent:FireClient(player, msg) end
 			else
 				self.Client.CommandFeedbackEvent:FireClient(player, "Player not found.")
 			end
@@ -58,7 +59,8 @@ function ModerationService:processCommand(player, message)
 			local targetID = tonumber(args[1])
 
 			if targetID then
-				AdminModule.UnbanPlayer(targetID, player)
+				local msg = AdminModule.UnbanPlayer(targetID, player)
+				if msg then self.Client.CommandFeedbackEvent:FireClient(player, msg) end
 			else
 				self.Client.CommandFeedbackEvent:FireClient(player, "Player not found.")
 			end
@@ -70,7 +72,8 @@ function ModerationService:processCommand(player, message)
 			local targetID = tonumber(args[1])
 
 			if targetID then
-				AdminModule.CheckPlayerHistory(targetID, player)
+				local msg = AdminModule.CheckPlayerHistory(targetID, player)
+				if msg then self.Client.CommandFeedbackEvent:FireClient(player, msg) end
 			else
 				self.Client.CommandFeedbackEvent:FireClient(player, "Player not found.")
 			end
@@ -94,7 +97,7 @@ function ModerationService:KnitStart()
 		if ModerationService:isAdmin(player) then
 			self.Client.CommandFeedbackEvent:FireClient(
 				player,
-				"AdminModule is activated for you. Toggle menu: " .. tostring(Config.ToggleKey)
+				"AdminModule is activated for you."
 			)
 		end
 

@@ -94,9 +94,9 @@ function AdminModule.BanPlayer(id, durationStr, reason, adminPlayer)
 	end)
 	if success then
 		sendDiscordMessage(embed)
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.Ban.Success)
+		return Config.Messages.Ban.Success
 	else
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.Ban.Failure:gsub("{Error}", tostring(error)))
+		return Config.Messages.Ban.Failure:gsub("{Error}", tostring(error))
 	end
 end
 
@@ -118,9 +118,9 @@ function AdminModule.UnbanPlayer(id: IntValue, adminPlayer: Player)
 		embed.footer = { text = os.date("%X | %d.%m.%Y") }
 
 		sendDiscordMessage(embed)
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.Unban.Success)
+		return Config.Messages.Unban.Success
 	else
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.Unban.Failure:gsub("{Error}", tostring(error)))
+		return Config.Messages.Unban.Failure:gsub("{Error}", tostring(error))
 	end
 end
 
@@ -184,9 +184,9 @@ function AdminModule.CheckPlayerHistory(id, adminPlayer)
 			local response = httpService:RequestAsync(request)
 			
 			if response.Success then
-				Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.CheckHistory.Success)
+				return Config.Messages.CheckHistory.Success
 			else
-				Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.CheckHistory.Failure:gsub("{Error}", tostring(response.StatusMessage)))
+				return Config.Messages.CheckHistory.Failure:gsub("{Error}", tostring(response.StatusMessage))
 			end
 		else
 			local embed = Config.Embeds.CheckHistory
@@ -199,7 +199,7 @@ function AdminModule.CheckPlayerHistory(id, adminPlayer)
 
 		
 	else
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.CheckHistory.Failure:gsub("{Error}", tostring(banHistory)))
+		return Config.Messages.CheckHistory.Failure:gsub("{Error}", tostring(banHistory))
 	end
 end
 
@@ -219,9 +219,9 @@ function AdminModule.GetPlayerID(username, adminPlayer)
 		embed.footer = { text = os.date("%X | %d.%m.%Y") }
 
 		sendDiscordMessage(embed)
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.GetID.Success:gsub("{UserID}", tostring(playerId)))
+		return Config.Messages.GetID.Success:gsub("{UserID}", tostring(playerId))
 	else
-		Config.Remotes.CommandFeedbackEvent:FireClient(adminPlayer, Config.Messages.GetID.Failure:gsub("{Error}", tostring(error)))
+		return Config.Messages.GetID.Failure:gsub("{Error}", tostring(error))
 	end
 end
 
