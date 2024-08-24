@@ -8,12 +8,6 @@ local Config = {}
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remotes = ReplicatedStorage.Remotes
 
-Config.Remotes = {
-	CommandFeedbackEvent = Remotes:WaitForChild("CommandFeedbackEvent"),
-	CommandsFromUI = Remotes:WaitForChild("ExecuteCommandFromUI"),
-	BanFromUI = Remotes:WaitForChild("BanFromUI")
-}
-
 -- General Settings
 Config.CommandPrefix = "/"
 Config.AdminUserIds = {1234, 4321}
