@@ -4,7 +4,7 @@
 --]]
 
 local AdminModule = {}
-local Config = require(script.Config)
+local Config = require(game.ServerStorage.Modules.AdminModuleSettings)
 
 -- Services
 local players = game:GetService("Players")
